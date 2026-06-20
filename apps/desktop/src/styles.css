@@ -307,8 +307,8 @@
     --dt-letter-spacing: 0;
     --dt-spacing-mul: 1;
 
-    --radius: 0.75rem;
-    --radius-scalar: 0.6;
+    --radius: 0.5rem;
+    --radius-scalar: 0.5;
 
     /* Space under last message vs overlay composer — driven by the measured composer height (see composer/index.tsx)
        plus the out-of-flow status stack's measured height (see status-stack/index.tsx) when one is showing. */
@@ -391,9 +391,10 @@
     --theme-mix-card: 38%;
     --theme-mix-elevated: 46%;
     --theme-mix-bubble: 46%;
-    --theme-neutral-chrome: #0d0d0e;
-    --theme-neutral-sidebar: #0a0a0b;
-    --theme-neutral-card: #161618;
+    /* Neutral grays — no blue tint, matches Claude Code dark aesthetic */
+    --theme-neutral-chrome: #1a1a1a;
+    --theme-neutral-sidebar: #141414;
+    --theme-neutral-card: #242424;
 
     /* Dark-only accent palette overrides. */
     --ui-red: #e75e78;

@@ -245,6 +245,22 @@ function MarkdownLink({ children, className, href, ...props }: ComponentProps<'a
     return <PreviewAttachment source="explicit-link" target={previewTarget} />
   }
 
+  // Local file:// links — open with the OS default app via Electron's shell
+  if (href?.startsWith('file://')) {
+    return (
+      <button
+        className={cn(
+          'font-semibold text-primary underline underline-offset-4 decoration-current/20 wrap-anywhere cursor-pointer hover:opacity-80',
+          className
+        )}
+        onClick={() => void window.hermesDesktop?.openExternal(href)}
+        type="button"
+      >
+        {children}
+      </button>
+    )
+  }
+
   const target = href ? normalizeExternalUrl(href) : href
 
   if (!target || !/^https?:\/\//i.test(target)) {

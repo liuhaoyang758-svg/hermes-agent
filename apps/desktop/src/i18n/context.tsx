@@ -95,7 +95,9 @@ export function I18nProvider({ children, configClient = defaultConfigClient, ini
   }, [locale])
 
   useEffect(() => {
-    if (!configClient) {
+    // When initialLocale is explicitly provided, the caller owns the locale —
+    // skip the async config override so it doesn't flip back to English.
+    if (initialLocale !== undefined || !configClient) {
       return
     }
 
@@ -108,13 +110,16 @@ export function I18nProvider({ children, configClient = defaultConfigClient, ini
       .getConfig()
       .then(config => {
         if (!cancelled) {
-          setLocaleState(normalizeLocale(getConfigDisplayLanguage(config)))
+          const configLang = getConfigDisplayLanguage(config)
+          // Only apply if the backend explicitly set a language.
+          if (configLang !== undefined) {
+            setLocaleState(normalizeLocale(configLang))
+          }
         }
       })
       .catch(error => {
         if (!cancelled) {
           setConfigLoadError(toError(error))
-          setLocaleState(DEFAULT_LOCALE)
         }
       })
       .finally(() => {

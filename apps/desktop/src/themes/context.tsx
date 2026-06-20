@@ -195,7 +195,12 @@ function applyTheme(theme: DesktopTheme, mode: 'light' | 'dark') {
     '--theme-sidebar-seed': c.sidebarBackground ?? c.background,
     '--theme-card-seed': c.card,
     '--theme-elevated-seed': c.popover,
-    '--theme-bubble-seed': c.userBubble ?? c.popover
+    '--theme-bubble-seed': c.userBubble ?? c.popover,
+    // Override neutral chrome/sidebar to match the background seed so the
+    // color-mix formula yields exactly the background color (no gray drift).
+    '--theme-neutral-chrome': c.background,
+    '--theme-neutral-sidebar': c.sidebarBackground ?? c.background,
+    '--theme-neutral-card': c.card
   }
 
   // shadcn/Tailwind tokens that aren't derived from the seed chain.
@@ -215,7 +220,7 @@ function applyTheme(theme: DesktopTheme, mode: 'light' | 'dark') {
     '--dt-user-bubble-border': c.userBubbleBorder ?? c.border,
     '--dt-font-sans': typo.fontSans,
     '--dt-font-mono': typo.fontMono,
-    '--noise-opacity-mul': isDark ? 'calc(0.04 / 0.21)' : 'calc(0.34 / 0.21)'
+    '--noise-opacity-mul': '0'
   }
 
   for (const [k, v] of Object.entries({ ...seeds, ...mixesFor(isDark), ...palette })) {

@@ -278,7 +278,69 @@ export const slateTheme: DesktopTheme = {
   }
 }
 
+/** Neutral dark gray with orange accent — Claude Code aesthetic. */
+export const claudeCodeTheme: DesktopTheme = {
+  name: 'claude',
+  label: 'Claude',
+  description: 'Neutral dark gray with orange accent',
+  colors: {
+    background: '#fdfdfc',
+    foreground: '#1a1a1a',
+    card: '#fdfdfc',
+    cardForeground: '#1a1a1a',
+    muted: '#f2f2f2',
+    mutedForeground: '#666666',
+    popover: '#fdfdfc',
+    popoverForeground: '#1a1a1a',
+    primary: '#CC6836',
+    primaryForeground: '#ffffff',
+    secondary: '#f5f1ee',
+    secondaryForeground: '#333333',
+    accent: '#f5f1ee',
+    accentForeground: '#1a1a1a',
+    border: 'rgba(0,0,0,0.09)',
+    input: 'rgba(0,0,0,0.12)',
+    ring: '#CC6836',
+    midground: '#CC6836',
+    composerRing: '#CC6836',
+    destructive: '#d94f4f',
+    destructiveForeground: '#ffffff',
+    sidebarBackground: '#fdfdfc',
+    sidebarBorder: 'rgba(0,0,0,0.07)',
+    userBubble: '#f5f1ee',
+    userBubbleBorder: 'rgba(0,0,0,0.09)'
+  },
+  darkColors: {
+    background: '#1a1a1a',
+    foreground: '#f0f0f0',
+    card: '#242424',
+    cardForeground: '#f0f0f0',
+    muted: '#2c2c2c',
+    mutedForeground: '#888888',
+    popover: '#2a2a2a',
+    popoverForeground: '#f0f0f0',
+    primary: '#CC6836',
+    primaryForeground: '#ffffff',
+    secondary: '#2c2c2c',
+    secondaryForeground: '#cccccc',
+    accent: '#2e2e2e',
+    accentForeground: '#f0f0f0',
+    border: 'rgba(255,255,255,0.08)',
+    input: 'rgba(255,255,255,0.10)',
+    ring: '#CC6836',
+    midground: '#CC6836',
+    composerRing: '#CC6836',
+    destructive: '#e05252',
+    destructiveForeground: '#ffffff',
+    sidebarBackground: '#141414',
+    sidebarBorder: 'rgba(255,255,255,0.06)',
+    userBubble: '#262626',
+    userBubbleBorder: 'rgba(255,255,255,0.08)'
+  }
+}
+
 export const BUILTIN_THEMES: Record<string, DesktopTheme> = {
+  claude: claudeCodeTheme,
   nous: nousTheme,
   midnight: midnightTheme,
   ember: emberTheme,
@@ -290,4 +352,4 @@ export const BUILTIN_THEMES: Record<string, DesktopTheme> = {
 export const BUILTIN_THEME_LIST = Object.values(BUILTIN_THEMES)
 
 /** Skin used when nothing is persisted or the persisted name is retired. */
-export const DEFAULT_SKIN_NAME = 'nous'
+export const DEFAULT_SKIN_NAME = 'claude'

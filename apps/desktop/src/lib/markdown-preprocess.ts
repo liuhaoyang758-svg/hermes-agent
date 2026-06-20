@@ -19,7 +19,24 @@ const RAW_URL_RE = /https?:\/\/[^\s<>"'`*]+[^\s<>"'`*.,;:!?]/g
 const LOCAL_PREVIEW_URL_RE = /(^|\s)https?:\/\/(?:localhost|127\.0\.0\.1|0\.0\.0\.0|\[::1\])(?::\d+)?\/?[^\s<>"'`]*/gi
 const LOCAL_PREVIEW_ONLY_RE = /^https?:\/\/(?:localhost|127\.0\.0\.1|0\.0\.0\.0|\[::1\])(?::\d+)?\/?$/i
 const URL_ONLY_LINE_RE = /^\s*https?:\/\/\S+\s*$/i
-const CITATION_MARKER_RE = /(?<=[\p{L}\p{N})\].,!?:;"'”’])\[(?:\d+(?:\s*,\s*\d+)*)\](?!\()/gu
+const CITATION_MARKER_RE = /(?<=[\p{L}\p{N})\].,!?:;"'"'])\[(?:\d+(?:\s*,\s*\d+)*)\](?!\()/gu
+
+// Windows absolute paths like C:\Users\foo\bar.xlsx or C:/Users/foo/bar.xlsx
+// Negative lookbehind prevents matching inside existing [text]( links or code spans
+const WIN_FILE_PATH_RE = /(?<![(\[`])([A-Za-z]:[/\\][^\s`'"<>[\]()]{3,})/g
+// Unix absolute paths with at least 2 segments and a file extension
+const UNIX_FILE_PATH_RE = /(?<![(\[`])(\/(?:[^\s`'"<>[\]()\\/]+\/)+[^\s`'"<>[\]()\\/]+\.[a-zA-Z0-9]{1,10})(?![)\]`])/g
+
+function autoLinkFilePaths(text: string): string {
+  let result = text.replace(WIN_FILE_PATH_RE, (path: string) => {
+    const url = "file:///" + path.split("\\").join("/")
+    return "[" + path + "](" + url + ")"
+  })
+  result = result.replace(UNIX_FILE_PATH_RE, (path: string) => {
+    return "[" + path + "](file://" + path + ")"
+  })
+  return result
+}
 
 /**
  * Returns true when `body` contains a line that's exactly `marker` (modulo
@@ -144,8 +161,10 @@ function normalizeVisibleProse(text: string): string {
     .map(part =>
       part.startsWith('`')
         ? part
-        : autoLinkRawUrls(
-            part.replace(/`{3,}/g, '').replace(LOCAL_PREVIEW_URL_RE, '$1').replace(CITATION_MARKER_RE, '')
+        : autoLinkFilePaths(
+            autoLinkRawUrls(
+              part.replace(/`{3,}/g, '').replace(LOCAL_PREVIEW_URL_RE, '$1').replace(CITATION_MARKER_RE, '')
+            )
           )
     )
     .join('')

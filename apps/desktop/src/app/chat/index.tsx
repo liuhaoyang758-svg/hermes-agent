@@ -129,7 +129,7 @@ function ChatHeader({
   }
 
   return (
-    <header className={cn(titlebarHeaderBaseClass, isRoutedSessionView && titlebarHeaderShadowClass)}>
+    <header className={cn(titlebarHeaderBaseClass, titlebarHeaderShadowClass)}>
       <div
         className={titlebarHeaderTitleClass}
         style={{

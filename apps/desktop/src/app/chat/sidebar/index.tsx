@@ -794,20 +794,29 @@ export function ChatSidebar({
   return (
     <Sidebar
       className={cn(
-        'relative h-full min-w-0 overflow-hidden border-t-0 border-b-0 text-foreground transition-none',
-        panesFlipped ? 'border-l border-r-0' : 'border-r border-l-0',
-        sidebarOpen
-          ? 'border-(--sidebar-edge-border) bg-(--ui-sidebar-surface-background) opacity-100'
-          : 'pointer-events-none border-transparent bg-transparent opacity-0',
-        // While floated by PaneShell's hover-reveal, force visible + interactive
-        // — on hover (group-hover/reveal) or when keyboard-pinned (data-forced).
-        'in-data-[pane-hover-reveal=open]:pointer-events-auto in-data-[pane-hover-reveal=open]:border-(--sidebar-edge-border) in-data-[pane-hover-reveal=open]:bg-(--ui-sidebar-surface-background) in-data-[pane-hover-reveal=open]:opacity-100',
-        'group-hover/reveal:pointer-events-auto group-hover/reveal:border-(--sidebar-edge-border) group-hover/reveal:bg-(--ui-sidebar-surface-background) group-hover/reveal:opacity-100'
+        'relative h-full min-w-0 text-foreground transition-none bg-transparent border-none',
+        sidebarOpen ? 'opacity-100' : 'pointer-events-none opacity-0',
+        'in-data-[pane-hover-reveal=open]:pointer-events-auto in-data-[pane-hover-reveal=open]:opacity-100',
+        'group-hover/reveal:pointer-events-auto group-hover/reveal:opacity-100'
       )}
       collapsible="none"
     >
+      {/* Gap above the floating card — window background shows here */}
+      <div aria-hidden className="h-[calc(var(--titlebar-height)+0.375rem)] shrink-0" />
+
+      {/* Floating card — fully rounded, shadow, no connecting borders */}
+      <div
+        className={cn(
+          'mx-1.5 mb-1.5 flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl',
+          sidebarOpen
+            ? 'bg-(--ui-sidebar-surface-background) shadow-sm'
+            : 'bg-transparent',
+          'in-data-[pane-hover-reveal=open]:bg-(--ui-sidebar-surface-background) in-data-[pane-hover-reveal=open]:shadow-sm',
+          'group-hover/reveal:bg-(--ui-sidebar-surface-background) group-hover/reveal:shadow-sm'
+        )}
+      >
       <SidebarContent className="gap-0 overflow-hidden bg-transparent px-2.5">
-        <SidebarGroup className="shrink-0 p-0 pb-2 pt-[calc(var(--titlebar-height)+0.375rem)]">
+        <SidebarGroup className="shrink-0 p-0 pb-2.5 pt-2.5 border-b border-(--sidebar-edge-border)">
           <SidebarGroupContent>
             <SidebarMenu className="gap-px">
               {SIDEBAR_NAV.map(item => {
@@ -1084,6 +1093,7 @@ export function ChatSidebar({
           </div>
         )}
       </SidebarContent>
+      </div>
     </Sidebar>
   )
 }
