@@ -169,11 +169,7 @@
       var(--theme-background-seed) var(--theme-mix-chrome),
       var(--theme-neutral-chrome)
     );
-    --ui-bg-sidebar: color-mix(
-      in srgb,
-      var(--theme-sidebar-seed) var(--theme-mix-sidebar),
-      var(--theme-neutral-sidebar)
-    );
+    --ui-bg-sidebar: #f1ebe0;
     --ui-bg-editor: color-mix(in srgb, var(--theme-card-seed) var(--theme-mix-card), var(--theme-neutral-card));
     --ui-bg-elevated: color-mix(
       in srgb,
@@ -255,7 +251,7 @@
     --ui-sash-hover-background: color-mix(in srgb, var(--ui-accent) 6%, transparent);
     --ui-surface-background: var(--ui-bg-editor);
     --ui-sidebar-surface-background: var(--ui-bg-sidebar);
-    --ui-chat-surface-background: var(--ui-bg-chrome);
+    --ui-chat-surface-background: #f5f0e8;
     --ui-editor-surface-background: var(--ui-bg-chrome);
     --ui-chat-bubble-background: color-mix(
       in srgb,
@@ -268,7 +264,7 @@
     --ui-inline-code-foreground: color-mix(in srgb, #141414 88%, transparent);
     --ui-selection-background: color-mix(in srgb, #ffd24a 55%, transparent);
 
-    --dt-background: var(--ui-bg-chrome);
+    --dt-background: #f9f6ef;
     --dt-foreground: var(--ui-text-primary);
     --dt-card: var(--ui-bg-editor);
     --dt-card-foreground: var(--ui-text-primary);
